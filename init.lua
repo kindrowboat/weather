@@ -13,7 +13,10 @@ local function create_weather_widget(location)
 
     weather_widget:connect_signal("button::press", function(_, _, _, button)
         if button == 1 then
-            awful.util.spawn("xfce4-terminal -T weather -He 'curl https://wttr.in/'" .. location, {
+            command = "'curl https://wttr.in/" .. location .. "'"
+            -- xfce4-terminal because alacritty doesn't support startup-notification
+            -- see: https://github.com/awesomeWM/awesome/issues/2517
+            awful.util.spawn("xfce4-terminal -T " .. command .. " -He " .. command, {
                 floating = true,
                 maximized = true,
             })
